@@ -37,13 +37,22 @@ async function run() {
             // console.log(service)
             res.json(service)
 
-        })
+        });
         // Add Orders API
         app.post('/orders', async (req, res) => {
             const order = req.body;
             const result = await orderCollection.insertOne(order);
             res.json(result);
-        })
+        });
+        // Use POST to get data by keys
+        app.get('/userOrders/:email', async (req, res) => {
+            const getemail = req.params.email;
+            // console.log('hitting to the backend', getemail);
+            const query = { email: getemail }
+            const products = await orderCollection.find(query).toArray();
+            res.send(products);
+        });
+
     }
     finally {
         // await client.close()
