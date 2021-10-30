@@ -20,6 +20,7 @@ async function run() {
         console.log('Connected to database');
         const database = client.db('travelingWorld');
         const servicesCollection = database.collection('services');
+        const orderCollection = database.collection('orders');
         //GET API
         app.get('/services', async (req, res) => {
             const cusor = servicesCollection.find({}); // sob find krote chaile khali object dilei hobe
@@ -37,7 +38,12 @@ async function run() {
             res.json(service)
 
         })
-        // POST API 
+        // Add Orders API
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            res.json(result);
+        })
     }
     finally {
         // await client.close()
