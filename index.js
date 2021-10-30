@@ -26,7 +26,18 @@ async function run() {
             const services = await cusor.toArray();
             res.send(services)
 
+        });
+        // GET Dynamic API
+        app.get('/services/:id', async (req, res) => {
+            const id = req.params.id; // Dynamic ID ta nicche
+            console.log('hiiting to the backend id=', id);
+            const query = { _id: ObjectId(id) };
+            const service = await servicesCollection.findOne(query);
+            // console.log(service)
+            res.json(service)
+
         })
+        // POST API 
     }
     finally {
         // await client.close()
