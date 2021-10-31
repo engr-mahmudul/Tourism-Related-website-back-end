@@ -31,7 +31,7 @@ async function run() {
         // GET Dynamic API
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id; // Dynamic ID ta nicche
-            console.log('hiiting to the backend id=', id);
+            // console.log('hiiting to the backend id=', id);
             const query = { _id: ObjectId(id) };
             const service = await servicesCollection.findOne(query);
             // console.log(service)
@@ -44,6 +44,12 @@ async function run() {
             const result = await orderCollection.insertOne(order);
             res.json(result);
         });
+        //Get All orders
+        app.get('/orders/allUsers', async (req, res) => {
+            const cursor = orderCollection.find({});
+            const orders = await cursor.toArray();
+            res.send(orders);
+        })
         // Use POST to get data by keys
         app.get('/userOrders/:email', async (req, res) => {
             const getemail = req.params.email;
