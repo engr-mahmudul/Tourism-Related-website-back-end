@@ -28,6 +28,14 @@ async function run() {
             res.send(services)
 
         });
+        // POST API
+        app.post('/services', async (req, res) => {
+            const service = req.body;
+            // console.log("hiiting post", service);
+            const result = await servicesCollection.insertOne(service);
+            res.json(result);
+
+        });
         // GET Dynamic API
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id; // Dynamic ID ta nicche
