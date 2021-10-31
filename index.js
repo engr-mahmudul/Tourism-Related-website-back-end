@@ -21,6 +21,7 @@ async function run() {
         const database = client.db('travelingWorld');
         const servicesCollection = database.collection('services');
         const orderCollection = database.collection('orders');
+        const extraServicesCollection = database.collection('extraServices');
         //GET API
         app.get('/services', async (req, res) => {
             const cusor = servicesCollection.find({}); // sob find krote chaile khali object dilei hobe
@@ -55,6 +56,12 @@ async function run() {
         //Get All orders
         app.get('/orders/allUsers', async (req, res) => {
             const cursor = orderCollection.find({});
+            const orders = await cursor.toArray();
+            res.send(orders);
+        })
+        //Get All Etra Services
+        app.get('/extraServices', async (req, res) => {
+            const cursor = extraServicesCollection.find({});
             const orders = await cursor.toArray();
             res.send(orders);
         })
